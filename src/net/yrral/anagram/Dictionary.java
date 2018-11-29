@@ -7,47 +7,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import net.yrral.anagram.util.CharacterCollector;
 
 public class Dictionary {
 	private final Map<String, Set<String>> anagramMap = new HashMap<>();
 	private static final Set<String> emptySetSingleton = new HashSet<>();
-	private static final Collector<Character, StringBuffer, String> characterCollector = new Collector<Character, StringBuffer, String>() {
-		private final HashSet<Characteristics> CHARACTERISTICS = new HashSet<>();
-
-		@Override
-		public Supplier<StringBuffer> supplier() {
-			return StringBuffer::new;
-		}
-
-		@Override
-		public BiConsumer<StringBuffer, Character> accumulator() {
-			return (buffer, character) ->
-				buffer.append(character);
-		}
-
-		@Override
-		public BinaryOperator<StringBuffer> combiner() {
-			return (buffer1, buffer2) -> buffer1.append(buffer2);
-		}
-
-		@Override
-		public Function<StringBuffer, String> finisher() {
-			return StringBuffer::toString;
-		}
-
-		@Override
-		public Set<Characteristics> characteristics() {
-			return CHARACTERISTICS;
-		}
-	};
-
+	private static final Collector<Character, StringBuffer, String> characterCollector = new CharacterCollector();
 	/**
 	 * Anagram Dictionary
 	 * @param filename Path to the dictionary file.
