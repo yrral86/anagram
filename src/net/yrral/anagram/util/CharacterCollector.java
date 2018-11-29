@@ -8,28 +8,28 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-public class CharacterCollector implements Collector<Character, StringBuffer, String> {
+public class CharacterCollector implements Collector<Character, StringBuilder, String> {
 	private static final HashSet<Characteristics> CHARACTERISTICS = new HashSet<>();
 
 	@Override
-	public Supplier<StringBuffer> supplier() {
-		return StringBuffer::new;
+	public Supplier<StringBuilder> supplier() {
+		return StringBuilder::new;
 	}
 
 	@Override
-	public BiConsumer<StringBuffer, Character> accumulator() {
+	public BiConsumer<StringBuilder, Character> accumulator() {
 		return (buffer, character) ->
 			buffer.append(character);
 	}
 
 	@Override
-	public BinaryOperator<StringBuffer> combiner() {
+	public BinaryOperator<StringBuilder> combiner() {
 		return (buffer1, buffer2) -> buffer1.append(buffer2);
 	}
 
 	@Override
-	public Function<StringBuffer, String> finisher() {
-		return StringBuffer::toString;
+	public Function<StringBuilder, String> finisher() {
+		return StringBuilder::toString;
 	}
 
 	@Override

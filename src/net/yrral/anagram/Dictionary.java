@@ -15,7 +15,7 @@ import net.yrral.anagram.util.CharacterCollector;
 public class Dictionary {
 	private final Map<String, Set<String>> anagramMap = new HashMap<>();
 	private static final Set<String> emptySetSingleton = new HashSet<>();
-	private static final Collector<Character, StringBuffer, String> characterCollector = new CharacterCollector();
+	private static final Collector<Character, StringBuilder, String> characterCollector = new CharacterCollector();
 	/**
 	 * Anagram Dictionary
 	 * @param filename Path to the dictionary file.
@@ -44,7 +44,7 @@ public class Dictionary {
 	}
 
 	private String canonicalize(String word) {
-		return word.toLowerCase().chars().mapToObj(c -> (char)c).sorted().collect(characterCollector);
+		return word.toLowerCase().chars().sorted().mapToObj(c -> (char)c).collect(characterCollector);
 	}
 
 	private Set<String> emptySet(String key) {
