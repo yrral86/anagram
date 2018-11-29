@@ -2,6 +2,7 @@ package net.yrral.anagram;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Finder {
@@ -13,7 +14,7 @@ public class Finder {
 			System.out.println("dictionary.txt should be the path to a dictionary file with one word per line");
 			System.exit(1);
 		}
-		
+
 		System.out.println("Welcome to the Anagram Finder");
 		System.out.println("-----------------------------");
 		Dictionary dictionary = null;
@@ -27,7 +28,7 @@ public class Finder {
 		}
 		long ellapsed = System.currentTimeMillis() - start;
 		System.out.println("Dictionary loaded in " + ellapsed + " ms");
-		
+
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {
 				System.out.print("AnagramFinder> ");
@@ -35,7 +36,15 @@ public class Finder {
 				if (word.equals("exit")) {
 					System.exit(0);
 				} else {
-					System.out.println(dictionary.getAnagrams(word).stream().collect(Collectors.joining(", ")));
+					start = System.currentTimeMillis();
+					Set<String> anagrams = dictionary.getAnagrams(word);
+					ellapsed = System.currentTimeMillis() - start;
+					if (anagrams.size() > 1) {
+						System.out.println("" + anagrams.size() + " anagrams found for " + word + " in " + ellapsed + " ms");
+						System.out.println(anagrams.stream().collect(Collectors.joining(", ")));
+					} else {
+						System.out.println("No anagrams found for " + word + " in " + ellapsed + " ms");
+					}
 				}
 			}
 		}

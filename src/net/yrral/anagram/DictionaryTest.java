@@ -39,4 +39,10 @@ class DictionaryTest {
 		assertEquals(1, exitAnagrams.size());
 		assertTrue(exitAnagrams.contains("exit"));
 	}
+
+	@Test
+	void testOreo() {
+		Set<String> oreoAnagrams = d.getAnagrams("oreo");
+		assertEquals(0, oreoAnagrams.size());
+	}
 }

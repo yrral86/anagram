@@ -18,18 +18,26 @@ public class Dictionary {
 			lines.forEach(this::addWord);
 		}
 	}
-	
+
 	public Set<String> getAnagrams(String word) {
-		return anagramMap.get(canonicalize(word));
+		String canonical = canonicalize(word);
+		// TODO: potential memory leak... unlike dictionary file, this is untrusted input
+		anagramMap.computeIfAbsent(canonical, this::emptySet);
+		Set<String> anagrams = anagramMap.get(canonicalize(word));
+		return anagrams;
 	}
 
 	private void addWord(String word) {
 		String canonical = canonicalize(word);
-		anagramMap.computeIfAbsent(canonical, key -> new HashSet<>());
+		anagramMap.computeIfAbsent(canonical, this::emptySet);
 		anagramMap.get(canonical).add(word);
 	}
-	
+
 	private String canonicalize(String word) {
 		return Stream.of(word.toLowerCase().split("")).sorted().collect(Collectors.joining(""));
+	}
+
+	private Set<String> emptySet(String key) {
+		return new HashSet<>();
 	}
 }
