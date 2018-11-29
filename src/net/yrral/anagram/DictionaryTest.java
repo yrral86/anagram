@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class DictionaryTest {
@@ -44,5 +45,14 @@ class DictionaryTest {
 	void testOreo() {
 		Set<String> oreoAnagrams = d.getAnagrams("oreo");
 		assertEquals(0, oreoAnagrams.size());
+	}
+
+	@Test
+	@Disabled
+	// disabled test for profiling many loads
+	void exerciseLoad() throws IOException {
+		for (int i = 0; i < 10000; i++) {
+			d = new Dictionary("data/dictionary.txt");
+		}
 	}
 }
