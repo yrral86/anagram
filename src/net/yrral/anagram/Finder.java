@@ -17,6 +17,7 @@ public class Finder {
 
 		System.out.println("Welcome to the Anagram Finder");
 		System.out.println("-----------------------------");
+
 		Dictionary dictionary = null;
 		long start = System.currentTimeMillis();
 		try {

@@ -11,20 +11,28 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Dictionary {
-	Map<String, Set<String>> anagramMap = new HashMap<>();
+	private final Map<String, Set<String>> anagramMap = new HashMap<>();
+	private static final Set<String> emptySetSingleton = new HashSet<>();
 
+	/**
+	 * Anagram Dictionary
+	 * @param filename Path to the dictionary file.
+	 * @throws IOException
+	 */
 	Dictionary(String filename) throws IOException {
 		try (Stream<String> lines = Files.lines(Paths.get(filename))) {
 			lines.forEach(this::addWord);
 		}
 	}
 
+	/**
+	 * @param word Word to find anagrams for.
+	 * @return Set of words that anagram to the word parameter.
+	 * Returns the word itself if it is in the dictionary.
+	 */
 	public Set<String> getAnagrams(String word) {
 		String canonical = canonicalize(word);
-		// TODO: potential memory leak... unlike dictionary file, this is untrusted input
-		anagramMap.computeIfAbsent(canonical, this::emptySet);
-		Set<String> anagrams = anagramMap.get(canonicalize(word));
-		return anagrams;
+		return anagramMap.getOrDefault(canonical, emptySetSingleton);
 	}
 
 	private void addWord(String word) {
