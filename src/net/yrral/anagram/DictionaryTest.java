@@ -51,8 +51,10 @@ class DictionaryTest {
 	@Disabled
 	// disabled test for profiling many loads
 	void exerciseLoad() throws IOException {
-		for (int i = 0; i < 10000; i++) {
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 100; i++) {
 			d = new Dictionary("data/dictionary.txt");
 		}
+		System.out.println("took " + (System.currentTimeMillis() - start) + " ms");
 	}
 }
