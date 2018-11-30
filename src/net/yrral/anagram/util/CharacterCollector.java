@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 public class CharacterCollector implements Collector<Character, StringBuilder, String> {
-	private static final HashSet<Characteristics> CHARACTERISTICS = new HashSet<>();
+	private static final Set<Characteristics> CHARACTERISTICS = new HashSet<>();
 
 	@Override
 	public Supplier<StringBuilder> supplier() {
